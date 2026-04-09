@@ -24,7 +24,7 @@ import java.util.List;
 public class CsvDataLoader implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(CsvDataLoader.class);
-    private static final String CSV_FILE_NAME = "movielist.csv";
+    private static final String CSV_FILE_NAME = "Movielist.csv";
 
     private final MovieRepository movieRepository;
 
