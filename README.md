@@ -1,3 +1,4 @@
+vou te passar o readme.doc para você ajustar
 # Outsera API - Intervalo de Produtores
 
 API REST desenvolvida em **Java 8 + Spring Boot 2.7** para cálculo do intervalo entre vitórias de produtores de filmes.
@@ -10,19 +11,19 @@ A aplicação está configurada para rodar na porta **8081** (application.proper
 
 A aplicação processa dados de filmes vencedores e identifica:
 
-- Produtores com o **menor intervalo** entre vitórias consecutivas  
-- Produtores com o **maior intervalo** entre vitórias consecutivas  
+- Produtores com o **menor intervalo** entre vitórias consecutivas
+- Produtores com o **maior intervalo** entre vitórias consecutivas
 
 ---
 
 ##  Stack Tecnológica
 
-- Java 8  
-- Spring Boot 2.7.18  
-- Spring Data JPA  
-- H2 Database (em memória)  
-- Maven  
-- JUnit 5 + MockMvc  
+- Java 8
+- Spring Boot 2.7.18
+- Spring Data JPA
+- H2 Database (em memória)
+- Maven
+- JUnit 5 + MockMvc
 
 ---
 
@@ -30,8 +31,8 @@ A aplicação processa dados de filmes vencedores e identifica:
 
 ### Pré-requisitos
 
-- Java 8 instalado  
-- Maven configurado  
+- Java 8 instalado
+- Maven configurado
 
 ### Build
 
@@ -90,16 +91,18 @@ A aplicação utiliza banco em memória **H2**, com carga inicial baseada em arq
 
 Console:
 http://localhost:8081/h2-console
-
+JDBC URL: jdbc:h2:mem:outseradb
+User: sa
+Password: (vazio)
 ---
 
 ## Testes
 
-Testes de integração com SpringBootTest + MockMvc:
+A aplicação possui teste de integração que valida o comportamento completo da API.
+O teste garante que:
 
-- 200 OK  
-- 404 Not Found  
-- 405 Method Not Allowed  
+- A API retorna corretamente os dados com base no arquivo CSV padrão
+- Qualquer alteração no arquivo que impacte o resultado fará o teste falhar
 
 ```bash
 mvn test
@@ -109,17 +112,17 @@ mvn test
 
 ## Arquitetura
 
-- Controller → endpoints REST  
-- Service → regras de negócio  
-- Repository → acesso a dados  
-- DTO → resposta da API  
+- Controller → endpoints REST
+- Service → regras de negócio
+- Repository → acesso a dados
+- DTO → resposta da API
 
 ---
 
 ## Padrão REST
 
 Implementação baseada no nível 2 de maturidade de Richardson Conforme requisitado
-na documentação. 
+na documentação.
 
 ---
 
