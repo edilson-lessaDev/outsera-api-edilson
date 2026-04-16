@@ -91,8 +91,11 @@ A aplicação utiliza banco em memória **H2**, com carga inicial baseada em arq
 
 Console:
 http://localhost:8081/h2-console
+
 JDBC URL: jdbc:h2:mem:outseradb
+
 User: sa
+
 Password: (vazio)
 ---
 
