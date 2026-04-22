@@ -20,7 +20,7 @@ import java.util.List;
 
 
 @Component
-@Order(1)
+@Order(2)
 public class CsvDataLoader implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(CsvDataLoader.class);

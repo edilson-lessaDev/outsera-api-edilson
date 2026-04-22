@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: outsera-api
+  labels:
+    app: outsera-api
+    version: "1.0.0"
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: outsera-api
+  template:
+    metadata:
+      labels:
+        app: outsera-api
+        version: "1.0.0"
+    spec:
+      containers:
+        - name: outsera-api
+          image: outsera-api:1.0.6-SNAPSHOT
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+
+          env:
+            - name: APP_VERSION
+              value: "1.0.0"
+
+            # 🔐 API Key vinda do Kubernetes Secret
+            - name: API_SECURITY_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: outsera-api-secret
+                  key: api-key
+
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 30
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 90
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "256Mi"
+            limits:
+              cpu: "400m"
+              memory: "512Mi"

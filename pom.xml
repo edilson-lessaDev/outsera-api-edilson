@@ -14,7 +14,7 @@
 
     <groupId>br.com.outsera.api</groupId>
     <artifactId>outsera-api</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
     <name>outsera-api</name>
     <description>Api Spring Boot Java Versão 8</description>
 
@@ -25,6 +25,11 @@
     </properties>
 
     <dependencies>
+        <!-- PROMETHEUS -->
+	<dependency>
+ 	   <groupId>io.micrometer</groupId>
+   	   <artifactId>micrometer-registry-prometheus</artifactId>
+	</dependency>
 
         <!-- WEB -->
         <dependency>
