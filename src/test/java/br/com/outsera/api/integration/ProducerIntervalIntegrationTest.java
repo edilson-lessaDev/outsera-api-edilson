@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(properties = "api.key=AFD0745X3459728")
+@SpringBootTest(properties = "api.security.key=AFD0745X3459728")
 @AutoConfigureMockMvc
 class ProducerIntervalIntegrationTest {
 

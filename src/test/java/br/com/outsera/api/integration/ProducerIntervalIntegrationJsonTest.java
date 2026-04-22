@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        properties = "api.key=AFD0745X3459728"
+        properties = "api.security.key=AFD0745X3459728"
 )
 class ProducerIntervalIntegrationJsonTest {
 
