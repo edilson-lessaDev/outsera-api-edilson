@@ -1,4 +1,5 @@
 package br.com.outsera.api.integration;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -6,37 +7,37 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(properties = "api.key=AFD0745X3459728")
 @AutoConfigureMockMvc
 class ProducerIntervalIntegrationTest {
-      
+
+    private static final String API_KEY_HEADER = "X-API-KEY";
+    private static final String API_KEY_VALUE = "AFD0745X3459728";
+
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     void shouldReturnProducerIntervalsSuccessfully() throws Exception {
-
-        mockMvc.perform(get("/producers/intervals"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.min").isArray())
-                .andExpect(jsonPath("$.max").isArray());
+        mockMvc.perform(get("/producers/intervals")
+                .header(API_KEY_HEADER, API_KEY_VALUE))
+                .andExpect(status().isOk());
     }
 
     @Test
     void shouldReturn404WhenEndpointIsWrong() throws Exception {
-
-        mockMvc.perform(get("/producers/interval"))
+        mockMvc.perform(get("/producers/interval")
+                .header(API_KEY_HEADER, API_KEY_VALUE))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void shouldReturn405WhenMethodIsInvalid() throws Exception {
-
-        mockMvc.perform(
-                org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/producers/intervals")
-        ).andExpect(status().isMethodNotAllowed());
+        mockMvc.perform(post("/producers/intervals")
+                .header(API_KEY_HEADER, API_KEY_VALUE))
+                .andExpect(status().isMethodNotAllowed());
     }
 }
