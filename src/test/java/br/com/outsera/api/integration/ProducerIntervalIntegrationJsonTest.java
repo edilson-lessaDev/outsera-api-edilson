@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.*;
 
 import java.util.Arrays;
 
@@ -19,23 +20,26 @@ class ProducerIntervalIntegrationJsonTest {
 
     @Test
     void shouldReturnExpectedProducerIntervalsBasedOnDefaultCsvFile() {
-        ProducerIntervalResponse response =
-                restTemplate.getForObject("/producers/intervals", ProducerIntervalResponse.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-API-KEY", "AFD0745X3459728");
 
-        assertThat(response).isNotNull();
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<ProducerIntervalResponse> response = restTemplate.exchange(
+                "/producers/intervals",
+                HttpMethod.GET,
+                entity,
+                ProducerIntervalResponse.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
 
         ProducerIntervalResponse expected = new ProducerIntervalResponse(
                 Arrays.asList(new ProducerIntervalDto("Joel Silver", 1, 1990, 1991)),
                 Arrays.asList(new ProducerIntervalDto("Matthew Vaughn", 13, 2002, 2015))
         );
 
-        assertThat(response).usingRecursiveComparison().isEqualTo(expected);
-    }
-
-    @Test
-    void shouldReturnProducerIntervalsSuccessfully() throws Exception {
-        mockMvc.perform(get("/producers/intervals")
-            .header("X-API-KEY", "AFD0745X3459728"))
-            .andExpect(status().isOk());
+        assertThat(response.getBody()).usingRecursiveComparison().isEqualTo(expected);
     }
 }
