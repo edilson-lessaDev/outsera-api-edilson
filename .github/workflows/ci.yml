@@ -32,5 +32,5 @@ jobs:
       - name: Publicar artefato JAR
         uses: actions/upload-artifact@v4
         with:
-          name: outsera-api-jar
+          name: outsera-api-${{ github.ref_name }}-run-${{ github.run_number }}
           path: target/*.jar
