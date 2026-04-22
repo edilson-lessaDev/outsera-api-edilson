@@ -5,7 +5,7 @@ FROM eclipse-temurin:8-jre
 WORKDIR /app
 
 # Copia automaticamente o JAR mais recente gerado pelo Maven
-COPY target/*.jar app.jar
+COPY target/outsera-api-*.jar app.jar
 
 # Expõe a porta da aplicação
 EXPOSE 8081
