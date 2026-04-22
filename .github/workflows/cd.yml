@@ -29,14 +29,6 @@ jobs:
             set -e
             kubectl set image deployment/outsera-api outsera-api=ghcr.io/edilson-lessadev/outsera-api:${{ github.event.workflow_run.head_sha }}
             kubectl rollout status deployment/outsera-api
+            kubectl wait --for=condition=available deployment/outsera-api --timeout=180s
             kubectl get pods
-
-            POD=\$(kubectl get pods -l app=outsera-api -o jsonpath='{.items[0].metadata.name}')
-            kubectl port-forward pod/\$POD 18081:8081 >/tmp/outsera-port-forward.log 2>&1 &
-            PF_PID=\$!
-
-            sleep 20
-            curl --retry 10 --retry-delay 3 --retry-connrefused -f http://127.0.0.1:18081/actuator/health
-
-            kill \$PF_PID || true
           EOF
