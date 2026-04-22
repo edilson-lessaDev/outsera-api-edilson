@@ -1,7 +1,8 @@
-name: CI - Outsera API
+name: CI/CD - Outsera API
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  IMAGE_NAME: ghcr.io/edilson-lessadev/outsera-api
 
 on:
   push:
@@ -11,8 +12,12 @@ on:
     branches:
       - outseraDesafio
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,10 +43,19 @@ jobs:
       - name: Configurar Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Gerar imagem Docker
+      - name: Login no GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build e push da imagem Docker
         uses: docker/build-push-action@v7
         with:
           context: .
           file: ./Dockerfile
-          push: false
-          tags: outsera-api:${{ github.run_number }}
+          push: true
+          tags: |
+            ghcr.io/edilson-lessadev/outsera-api:latest
+            ghcr.io/edilson-lessadev/outsera-api:${{ github.sha }}
