@@ -31,4 +31,11 @@ class ProducerIntervalIntegrationJsonTest {
 
         assertThat(response).usingRecursiveComparison().isEqualTo(expected);
     }
+
+    @Test
+    void shouldReturnProducerIntervalsSuccessfully() throws Exception {
+        mockMvc.perform(get("/producers/intervals")
+            .header("X-API-KEY", "AFD0745X3459728"))
+            .andExpect(status().isOk());
+    }
 }
