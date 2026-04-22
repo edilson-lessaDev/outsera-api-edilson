@@ -7,10 +7,10 @@ env:
 on:
   push:
     branches:
-      - outseraDesafio
+      - main
   pull_request:
     branches:
-      - outseraDesafio
+      - main
 
 permissions:
   contents: read
